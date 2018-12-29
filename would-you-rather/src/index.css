@@ -3,3 +3,41 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+h1 {
+  text-align: center;
+  font-size: 100%;
+  font: helvetica;
+  color : grey;
+
+}
+
+h2 {
+  text-align: inherit;
+  font-size: 100%;
+  font: helvetica;
+  color : grey;
+
+}
+
+.label-text {
+  font: helvetica;
+  font-size: 10px;
+  color: grey;
+}
+
+.nav {
+  text-align: center;
+}
+
+.author {
+  font: helvetica;
+  font-size: 10px;
+  color: grey;
+}
+
+.currentUser {
+  font: helvetica;
+  font-size: 10px;
+  color: grey;
+}
