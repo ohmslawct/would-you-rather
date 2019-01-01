@@ -1,6 +1,9 @@
 import { RECEIVE_USERS } from '../actions/users'
 import { LOGOUT_USER } from '../actions/users'
 import { LOGIN_USER } from '../actions/users'
+import { LOG_VOTE } from '../actions/users'
+
+
 
 export default function users (state = {}, action) {
 
@@ -24,6 +27,19 @@ export default function users (state = {}, action) {
             ...state,
             ...action.userEmail
           }
+
+        case LOG_VOTE :
+        return {
+          ...state,
+          [action.name] : {
+            ...state[action.name],
+            answers : state[action.name].answers.concat(action.authedUser)
+
+
+            }
+          }
+        
+
 
       default :
         return state

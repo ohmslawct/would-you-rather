@@ -20,7 +20,27 @@ h2 {
 
 }
 
+.buttonSelected {
+   background-color: #4CAF50; /* Green */
+}
+
+.leaderboard {
+  text-align: center;
+  font-size: 80%;
+  font: helvetica;
+  color : grey;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
 .label-text {
+  font: helvetica;
+  font-size: 10px;
+  color: grey;
+}
+
+
+.notes {
   font: helvetica;
   font-size: 10px;
   color: grey;

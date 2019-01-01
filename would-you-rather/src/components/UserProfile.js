@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleAddPoll } from '../actions/polls'
-import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import { updateUserProfile } from '../actions/users'
 import Logout from "./Logout";
@@ -23,7 +21,7 @@ class UserProfile extends Component {
 
   handleChange = (e) => {
     const text = e.target.value
-    const fieldName = e.target.name
+
 
     this.setState( () => ({
       fieldName : text
@@ -33,11 +31,8 @@ class UserProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const { text, userName } = this.state
-
     // get dispatch and id from props which is handled by connnect
     const { dispatch, id } = this.props
-
 
     dispatch(updateUserProfile(id))
 
@@ -49,10 +44,10 @@ class UserProfile extends Component {
 
   render() {
 
-    const { text } = this.state
+    const { authedUser} = this.props;
 
     if(this.props.authedUser === ""){
-      this.props.history.push("/");
+      this.props.history.push("/login");
     }
 
     return (
@@ -60,34 +55,12 @@ class UserProfile extends Component {
         <h2 className='center'>User Profile</h2>
         <form className='new-poll' onSubmit={this.handleSubmit}>
 
-          <input type="text"
-            name="userName"
-            placeholder="{}"
-            value={this.authedUser}
-            onChange={this.handleChange}
-            className=''
-            maxLength={50}
-          /> Name
+        {authedUser}<br/>
+          <span className="label-text">
+         User ID
+         </span>
           <br/><br/>
-          <input type="text"
-            name="email"
-            placeholder="{}"
-            value={this.authedUser}
-            onChange={this.handleChange}
-            className=''
-            maxLength={50}
-          /> Email
 
-
-
-          <br/>
-          <br/>
-          <button
-            className='btn'
-            type='submit'
-            disabled={text === ''}>
-            Update
-          </button>
 
 
         </form>

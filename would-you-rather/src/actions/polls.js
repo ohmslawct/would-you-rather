@@ -1,10 +1,6 @@
 import { savePoll } from '../utils/api'
-import { saveLikeToggle } from '../utils/api'
 import { showLoading, hideLoading } from 'react-redux-loading'
 import firebaseApp from "../firebaseApp";
-import { connect } from 'react-redux';
-
-
 
 export const ADD_POLL = 'ADD_POLL'
 export const RECEIVE_POLLS = 'RECEIVE_POLLS'
@@ -36,12 +32,6 @@ export function addVote(polls){
 }
 
 
-//
-//handleAddVote>
-//saveVote
-//>addVote
-
-
 /// POLL ACTION CREATOR
 export function handleAddVote(vote) {
   return (dispatch, getState) => {
@@ -55,38 +45,21 @@ export function handleAddVote(vote) {
   }
 }
 
-// _saveTweet ({ text, author, replyingTo })
 
+// ???
 function saveVote(vote) {
   console.log("Saving Vote Here....");
-
-//  let polls = this.props.polls;
-
-//  const { polls } = getState()
-//  console.log("Poll:", info);
-
-//
-return new Promise( (res, rej) => {
-    setTimeout( () => {
-
-
-      res(vote)
-    }, 1000)  // setTimeout
-  })
-
-
+  return new Promise( (res, rej) => {
+      setTimeout( () => {
+        res(vote)
+      }, 1000)  // setTimeout
+    })
 }
-
-
-
-
-
-
 
 
 export function handleAddPoll (poll) {
   return (dispatch, getState) => {
-    const { authedUser } = getState() // pull the current authed user from state.
+    
       dispatch(showLoading())
 
     return savePoll({
@@ -97,10 +70,3 @@ export function handleAddPoll (poll) {
       .then(() => dispatch(hideLoading()))
   }
 }
-
-//  savePoll returns this:
-// polls = {
-//   ...polls,
-//   [formattedPoll.id]: formattedPoll,
-// }
-//

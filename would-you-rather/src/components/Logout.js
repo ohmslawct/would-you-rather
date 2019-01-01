@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 //import { withRouter } from "react-router";
 import firebaseApp from "../firebaseApp";
 import { handleLogoutUser } from "../actions/users";
 
 class Logout extends Component {
 
-
 render() {
 
   const { dispatch } = this.props;
 
   function handleChange() {
-
     dispatch(handleLogoutUser());
-    // firebaseApp.auth().signOut().then(function() {
-    //   console.log("Sign-out successful.");
-    // }).catch(function(error) {
-    // console.log("Error: ", error);
-    // });
    }
 
 function sendResetEmail() {
@@ -49,7 +42,6 @@ function sendResetEmail() {
     )
   }
 }
-
 
 function mapStateToProps () {
   return {

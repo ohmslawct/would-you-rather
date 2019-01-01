@@ -3,6 +3,8 @@ import { ADD_POLL } from '../actions/polls'
 import { VOTE } from '../actions/polls'
 
 
+
+
 export default function polls (state = {}, action) {
   switch(action.type) {
 
@@ -29,6 +31,10 @@ export default function polls (state = {}, action) {
             }
           }
       }
+
+
+
+
 
 // state[action.pid][action.voteFor].votes.concat("Hi")
       default :

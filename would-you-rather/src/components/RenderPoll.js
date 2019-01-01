@@ -1,85 +1,210 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { formatPoll, formatDate } from '../utils/api'
-import handleLikeToggle from '../actions/polls'
-import { handleAddVote } from '../actions/polls'
-import firebaseApp from "../firebaseApp"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { logVote } from "../actions/users";
+
+import { handleAddVote } from "../actions/polls";
+import { NavLink } from "react-router-dom";
 
 class Poll extends Component {
-
-handleClick = (e) => {
-    e.preventDefault()
+  handleClick = e => {
+    e.preventDefault();
     let questionNumber = e.target.name;
     let pollId = e.target.id;
 
     // get dispatch and id from props which is handled by connnect
-    const { dispatch, id } = this.props
+    const { dispatch, authedUser } = this.props;
 
-    dispatch(handleAddVote({
-      pid : pollId,
-      questionNumber : questionNumber,
-      authedUser : this.props.authedUser,
-    }))
-  } // handleclick
+    dispatch(
+      handleAddVote({
+        pid: pollId,
+        questionNumber: questionNumber,
+        authedUser: this.props.authedUser
+      })
+    );
 
+    let user = this.getName(authedUser);
 
-pollsDisplay = (poll) => {
+    dispatch(logVote(authedUser, pollId, user));
+  }; // handleclick
 
-  poll.optionOne.votes.length
+  getName = id => {
+    const { users } = this.props;
 
-}
+    let name = users.filter(user => {
+      return user.id === id;
+    });
 
+    name = name[0].name;
+    return name;
+  };
 
-render() {
-   let { polls, users, authedUser} = this.props
+  roundNumber = num => {
+    return parseFloat(Math.round(num * 100) / 100).toFixed(0);
+  };
 
-   if(authedUser==null){
-     authedUser = "Loading...";
-   }
+  wasSelected = voters => {
+    let changeButtonColor = voters.map(voter => {
+      if (voter === this.props.authedUser) {
+        return "buttonSelected";
+      }
+    });
 
-   let myPoll = this.props.pollId;
+    return changeButtonColor[changeButtonColor.length - 1];
+  };
 
+  pollsDisplay = poll => {
+    switch (this.props.views.pollView) {
+      case "answered":
+        if (
+          poll.optionOne.votes.length !== 0 ||
+          poll.optionTwo.votes.length !== 0
+        ) {
+          return (
+            <div key={poll.id}>
+              <button
+                name="optionOne"
+                id={poll.id}
+                onClick={this.handleClick}
+                className={this.wasSelected(poll.optionOne.votes)}
+              >
+                {poll.optionOne.votes.length}{" "}
+              </button>{" "}
+              {poll.optionOne.text}{" "}
+              {this.roundNumber(
+                (poll.optionOne.votes.length /
+                  (poll.optionOne.votes.length + poll.optionTwo.votes.length)) *
+                  100
+              )}{" "}
+              {"%"}
+              <br />
+              <button
+                name="optionTwo"
+                id={poll.id}
+                onClick={this.handleClick}
+                className={this.wasSelected(poll.optionTwo.votes)}
+              >
+                {poll.optionTwo.votes.length}{" "}
+              </button>{" "}
+              {poll.optionTwo.text}{" "}
+              {this.roundNumber(
+                (poll.optionTwo.votes.length /
+                  (poll.optionOne.votes.length + poll.optionTwo.votes.length)) *
+                  100
+              )}{" "}
+              {"%"}
+              <div className="author">
+                {" "}
+                {poll.author} <NavLink to={`/poll/${poll.id}`}>details</NavLink>
+              </div>
+              <br />
+            </div>
+          );
+        }
+        break;
 
-return(
+      case "all":
+        return (
+          <div>
+            <button
+              name="optionOne"
+              id={poll.id}
+              onClick={this.handleClick}
+              className={this.wasSelected(poll.optionOne.votes)}
+            >
+              {poll.optionOne.votes.length}{" "}
+            </button>{" "}
+            {poll.optionOne.text} <br />
+            <button
+              name="optionTwo"
+              id={poll.id}
+              onClick={this.handleClick}
+              className={this.wasSelected(poll.optionTwo.votes)}
+            >
+              {poll.optionTwo.votes.length}{" "}
+            </button>{" "}
+            {poll.optionTwo.text} <br />
+            <div className="author">
+              {" "}
+              {poll.author}
+              <NavLink to={`/poll/${poll.id}`}>details</NavLink>{" "}
+            </div>
+            <br />
+          </div>
+        );
 
-<div className='poll-info'>
+      // show new as default
+      default:
+        if (
+          poll.optionOne.votes.length === 0 &&
+          poll.optionTwo.votes.length === 0
+        ) {
+          return (
+            <div key={poll.id}>
+              <button
+                name="optionOne"
+                id={poll.id}
+                onClick={this.handleClick}
+                className={this.wasSelected(poll.optionOne.votes)}
+              >
+                {poll.optionOne.votes.length}{" "}
+              </button>{" "}
+              {poll.optionOne.text} <br />
+              <button
+                name="optionTwo"
+                id={poll.id}
+                onClick={this.handleClick}
+                className={this.wasSelected(poll.optionTwo.votes)}
+              >
+                {poll.optionTwo.votes.length}{" "}
+              </button>{" "}
+              {poll.optionTwo.text} <br />
+              <div className="author">
+                {" "}
+                {poll.author} <NavLink to={`/poll/${poll.id}`}>details</NavLink>
+              </div>
+              <br />
+            </div>
+          );
+        } else {
+        }
 
-{polls.map( poll => (
-  <div>
-  <button
-    name="optionOne"
-    id={poll.id}
-    onClick={this.handleClick}
-    >
-    {poll.optionOne.votes.length}</button>   {poll.optionOne.text} <br/>
+        break;
+    }
+  };
 
-  <button
-    name="optionTwo"
-    id={poll.id}
-    onClick={this.handleClick}
-    >
-    {poll.optionTwo.votes.length}</button>   {poll.optionTwo.text}  <br/>
-    <div className="author">{poll.author}</div>
-    <br/>
-  </div>
-))}
+  render() {
+    let { polls, authedUser } = this.props;
 
+    if (authedUser == null) {
+      authedUser = "Loading...";
+    }
 
-</div>
-  ) // return
+    polls.sort((a, b) => b.timestamp - a.timestamp);
+
+    return (
+      <div className="poll-info">
+        {polls.map(poll => {
+          return this.pollsDisplay(poll);
+        })}
+      </div>
+    ); // return
   } // render
 } // component
 
-function mapStateToProps ({authedUser, users, polls},  id , pollId, myPoll) {
-
+function mapStateToProps(
+  { authedUser, users, polls, views },
+  id,
+  pollId,
+  myPoll
+) {
   return {
-    authedUser,
-    id : Object.keys(polls),
-    polls : Object.values(polls),
-    authedUser : authedUser,
-    users : Object.values(users)
-  }
+    id: Object.keys(polls),
+    polls: Object.values(polls),
+    authedUser: authedUser,
+    users: Object.values(users),
+    views
+  };
 }
 
-export default withRouter(connect(mapStateToProps)(Poll))
+export default withRouter(connect(mapStateToProps)(Poll));

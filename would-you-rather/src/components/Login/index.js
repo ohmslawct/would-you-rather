@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import firebaseApp from "../../firebaseApp";
 import LoginView from "./LoginView";
+import SignUp from "../SignUp";
 import { connect } from 'react-redux'
 import { setAuthedUser } from "../../actions/authedUser"
 import { receiveUsers } from "../../actions/users"
-import { addNewUser } from "../../actions/shared"
-
-import { Redirect } from 'react-router-dom';
-
 
 class LoginContainer extends Component {
 
@@ -20,13 +17,14 @@ class LoginContainer extends Component {
       const user = await firebaseApp
         .auth()
         .signInWithEmailAndPassword(email.value, password.value);
-       this.props.history.push("/viewpolls");
+
+       this.props.history.push("/");
 
         firebaseApp.auth().onAuthStateChanged(function(user) {
           if (user) {
             console.log("User signed in: ", firebaseApp.auth().currentUser.email);
           //  var userInfo = firebaseApp.auth().currentUser;
-            var { displayName, email, photoUrl, emailVerified, uid } = user;
+          //  var { displayName, email, photoUrl, emailVerified, uid } = user;
 
           } else {
         //    console.log("Not Signed In", user)
@@ -47,13 +45,12 @@ let newUser = {
     id: uid,
     name: userDisplayName,
     author: "",
-    avatarURL: "",
+    avatarURL: "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg",
     polls: [],
     answers: [],
+    questions: [],
   }
 }
-
-
 
    const { dispatch } = this.props
 
@@ -67,7 +64,11 @@ let newUser = {
   };
 
   render() {
-    return <LoginView onSubmit={this.handleLogin} />;
+    return (<div>
+      <LoginView onSubmit={this.handleLogin}/>
+      <SignUp />
+      </div>
+    );
   }
 }
 

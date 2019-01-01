@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddPoll } from '../actions/polls'
-import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
-import firebaseApp from "../firebaseApp";
 
-
-class NewPoll extends Component {
+class AddPoll extends Component {
   state = {
     text: '',
     textOne: '',
@@ -14,56 +11,37 @@ class NewPoll extends Component {
     toHome: false,
   }
 
-  handleChange = (e) => {
+handleChange = (e) => {
 
-    const text = e.target.value
-console.log("Hey e", e);
-console.log("Hey text", text, e.target);
+const text = e.target.value
 
-if (e.target.id=="optionOne") {
+if (e.target.id==="optionOne") {
   this.setState( () => ({
     textOne : text
   }))
 }
 
-
-if (e.target.id=="optionTwo") {
+if (e.target.id==="optionTwo") {
   this.setState( () => ({
     textTwo : text
   }))
 }
 
-
     this.setState( () => ({
       text
     }))
-
-
-
-  }
+}
 
   handleSubmit = (e) => {
     e.preventDefault()
 
     const { textOne, textTwo } = this.state
-
-    const author = firebaseApp.auth().currentUser.email;
-
-    // get dispatch and id from props which is handled by connnect
     const { dispatch, id } = this.props
-
-    console.log("ID: ", id);
-    console.log("Author: ", author);
-
-    // call the ACTION to add poll.
-
-
-    var car = {type:"Fiat", model:"500", color:"white"};
-
     var text = { textOne: {textOne} , textTwo: {textTwo}};
 
+    const { authedUser } = this.props;
 
-    dispatch(handleAddPoll(text, id, author))
+    dispatch(handleAddPoll(text, id, authedUser ))
 
     this.setState(() => ({
       text: '',
@@ -71,10 +49,12 @@ if (e.target.id=="optionTwo") {
       textTwo:'',
     }))
 
+        this.props.history.push("/");
+
   } // handleSubmit
 
   render() {
-    const { text, textOne, textTwo, toHome } = this.state
+    const { text, textOne, textTwo } = this.state
 
     if(this.props.authedUser === ""){
       this.props.history.push("/");
@@ -85,12 +65,13 @@ if (e.target.id=="optionTwo") {
 
     return (
       <div>
-        <h3 className='center'>Create Poll</h3>
+        <h2 className='center'>Create Poll</h2>
         <form className='new-poll' onSubmit={this.handleSubmit}>
         <p>
           Would you rather?
         </p>
           <textarea
+            rows="2" cols="50"
             id="optionOne"
             placeholder="Option 1"
             value={textOne}
@@ -106,6 +87,7 @@ if (e.target.id=="optionTwo") {
           <p></p>
 
           <textarea
+            rows="2" cols="50"
             id="optionTwo"
             placeholder="Option 2"
             value={textTwo}
@@ -118,7 +100,8 @@ if (e.target.id=="optionTwo") {
               {textLeftOptionTwo}
             </div>
           )}
-
+          <br/>
+          <br/>
           <button
             className='btn'
             type='submit'
@@ -137,4 +120,4 @@ function mapStateToProps({authedUser}) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(NewPoll))
+export default withRouter(connect(mapStateToProps)(AddPoll))

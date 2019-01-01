@@ -1,12 +1,35 @@
-import React, { Component } from "react";
+
 import firebaseApp from "../firebaseApp";
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+
+
 
 export const RECEIVE_USERS = 'RECEIVE_USERS'
 export const UPDATE_USER = 'UPDATE_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
+export const CHANGE_VIEW = 'CHANGE_VIEW'
+export const LOG_VOTE = 'LOG_VOTE'
+
+
+export function logVote(authedUser, pollId, name) {
+  console.log("Logging Vote from user", authedUser, "name ", name , "for Poll ID", pollId);
+  return {
+    type: LOG_VOTE,
+    pollId : pollId,
+    authedUser : authedUser,
+    name : name
+  }
+}
+
+export function changeView(pollView) {
+  console.log("Changing View");
+
+  return {
+    type: CHANGE_VIEW,
+    pollView : pollView
+  }
+}
+
 
 export function receiveUsers (users) {
   return{
@@ -47,8 +70,5 @@ export function handleLogoutUser(user) {
     }).then( () => {
           dispatch(logoutUser(user));
     })
-
-
-
   }
 }

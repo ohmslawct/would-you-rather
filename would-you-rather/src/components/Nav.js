@@ -1,8 +1,6 @@
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 class Nav extends Component {
@@ -17,6 +15,8 @@ render(){
     currentUser = this.props.users.map( (user) => {
         if (user.id === this.props.authedUser){
         return user.name;
+    }else{
+      return "";
     }
     })
   }
@@ -30,21 +30,28 @@ render(){
             Home • <span> </span>
           </NavLink>
 
-
-          <NavLink to='/newpoll'>
-            New Poll • <span> </span>
+          <NavLink to='/add'>
+            Add Poll • <span> </span>
           </NavLink>
 
           <NavLink to='/viewpolls'>
             View Polls • <span> </span>
           </NavLink>
 
+          <NavLink to='/leaderboard'>
+            Leaderboard • <span> </span>
+          </NavLink>
+
           <NavLink to='/profile'>
-            Account
+            Account • <span> </span>
+          </NavLink>
+
+          <NavLink to='/logout'>
+            Log Out
           </NavLink>
 
           <br/>
-          <span class="currentUser">{currentUser}</span>
+          <span className="currentUser">{currentUser}</span>
 
     </nav>
   )

@@ -1,45 +1,36 @@
 
-import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import RenderPoll from './RenderPoll'
-import { handleLikeToggle } from '../actions/polls'
-
+import { changeView } from '../actions/views'
 
 class ViewPolls extends Component {
 
-state = {
-  pollView : "all"
-}
 
 handleClick = (e) => {
-  let text = e.target.name
-  this.setState( () => ({
-    pollView : text
-  }))
+  const { dispatch } = this.props;
+  let view = e.target.name
+  dispatch(changeView(view));
 }
 
   render() {
 
 if(this.props.authedUser === ""){
-  this.props.history.push("/");
+  this.props.history.push("/login");
 }
 
-    let thePolls = this.props.polls;
 
-  return (
+return (
 
     <div>
     <h1>
-    <button name="all" onClick={ this.handleClick }>All</button> •
-    <button name="new" onClick={this.handleClick}>New</button> •
+    <button name="all" onClick={ this.handleClick }>All</button>&nbsp;•&nbsp;
+    <button name="new" onClick={this.handleClick}> New</button>&nbsp;•&nbsp;
     <button name="answered" onClick={this.handleClick}>Answered</button></h1>
 
-    {console.log(this.state.pollView)}
+    <RenderPoll/>
 
-      <RenderPoll pollId={thePolls[0]} view={this.state.pollView}/>
     </div>
   )
 
@@ -47,11 +38,12 @@ if(this.props.authedUser === ""){
 } // ViewPolls class
 
 
-function mapStateToProps ({authedUser, polls, users}) {
+function mapStateToProps ({authedUser, polls, users, views}) {
   return {
     authedUser : authedUser,
     polls : Object.keys(polls),
-    users : Object.keys(users)
+    users : Object.keys(users),
+    views : Object.keys(views),
   }
 }
 

@@ -1,28 +1,19 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
-// import { BrowserRouter as Router, Route } from "react-router-dom";
-
-import { NavLink } from 'react-router-dom'
-
 import { connect } from 'react-redux'
-import Polls from './polls'
-import PrivateRoute from "../PrivateRoute";
-import Home from "./Home";
 import Login from "./Login/";
 import SignUp from "./SignUp/";
-import Logout from "./Logout";
-
 
 class Dashboard extends Component {
   render() {
     return (
-      <div>
+      <div className="">
 
       <header className="App-header">
         <h1 className="App-title">Would You Rather!</h1>
       </header>
-        <h3 className='center'></h3>
+        Please Log In or Sign Up. <br/><br/><span className="notes">Reviewers can sign up or use demo account: <br/>U: demo@rainmakerco.com  <br/>P: WonderfulYou</span>
         <ul className='dashboard-list'>
+
         </ul>
               <SignUp/>
               <Login/>

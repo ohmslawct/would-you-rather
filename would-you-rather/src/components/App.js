@@ -1,48 +1,37 @@
+import '../index.css';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
-
 import { handleInitialData } from '../actions/shared'
 import {userStateChangeMonitor} from '../actions/shared'
-
 import Dashboard from "./Dashboard"
 import LoadingBar from 'react-redux-loading'
-import NewPoll from "./NewPoll"
+import AddPoll from "./AddPoll"
 import Nav from "./Nav"
-
-import '../index.css';
-import * as firebaseui from 'firebaseui'
-import firebase from "firebase";
+import LogoutNow from "./LogoutNow"
 import firebaseApp from "../firebaseApp";
-
-//import PrivateRoute from "../PrivateRoute";
-import Home from "./Home";
 import ViewPolls from "./ViewPolls"
 import Login from "./Login/";
 import SignUp from "./SignUp/";
+import Leaderboard from "./Leaderboard"
 import UserProfile from "./UserProfile";
-import Logout from "./Logout";
-
-import { loginUser, logoutUser } from "../actions/users";
+import PollDetails from "./PollDetails";
+import { loginUser } from "../actions/users";
 import {setAuthedUser} from "../actions/authedUser";
-
-
+import My404Component from "./My404Component";
 
 class App extends Component {
-
-//    state = { loading: true, authenticated: false, user: null };
-
 
 componentWillMount() {
   let authenticated, loading
 
   const { dispatch } = this.props;
 
-  if (authenticated == ""){
+  if (authenticated === ""){
     authenticated = false;
   }
 
-  if  (loading == ""){
+  if  (loading === ""){
     loading = true;
   }
 
@@ -61,10 +50,6 @@ firebaseApp.auth().onAuthStateChanged(user => {
 
 }
 
-// authenticated: true,
-// currentUser: user,
-// loading: false
-
 componentDidMount() {
   this.props.dispatch(userStateChangeMonitor())
 
@@ -76,7 +61,7 @@ componentDidMount() {
 render() {
 
 
-const { authenticated, loading } = this.props;
+const { loading } = this.props;
 
 if (loading) {
      return (<div> <LoadingBar /> <p>Loading......</p></div>)
@@ -89,12 +74,16 @@ return (
     <Nav />
         <div className='container'>
           <div className="App">
-            <Route exact path="/" component={withRouter(Dashboard)} authenticated={this.props.authenticated}/>
+            <Route exact path="/" component={withRouter(ViewPolls)} authenticated={this.props.authenticated}/>
             <Route exact path="/login" component={withRouter(Login)} />
             <Route exact path="/signup" component={withRouter(SignUp)} />
-            <Route exact path="/newpoll" component={withRouter(NewPoll)}/>
+            <Route exact path="/add" component={withRouter(AddPoll)}/>
             <Route exact path="/viewpolls" component={withRouter(ViewPolls)}/>
+            <Route exact path="/leaderboard" component={withRouter(Leaderboard)}/>
             <Route exact path="/profile" component={UserProfile}/>
+            <Route exact path="/logout" component={LogoutNow}/>
+            <Route exact path='/poll/:id' component={PollDetails} pollDetail='/poll/:id' />
+            <Route path='/404'  component={My404Component} />
           </div>
     </div>
 </Fragment>

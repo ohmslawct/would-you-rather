@@ -1,151 +1,143 @@
 import firebaseApp from "../firebaseApp";
-
-//
-// let users = {
-//   sarah_edo: {
-//     id: "sarah_edo",
-//     name: "Sarah Drasner",
-//     author: "Sarah D.",
-//     avatarURL: "https://tylermcginnis.com/would-you-rather/sarah.jpg",
-//     polls: ['8xf0y6ziyjabvozdd253nd', 'hbsc73kzqi75rg7v1e0i6a', '2mb6re13q842wu8n106bhk', '6h5ims9iks66d4m7kqizmv', '3sklxkf9yyfowrf0o1ftbb'],
-//   },
-//   tylermcginnis: {
-//     id: "tylermcginnis",
-//     author: "Sarah D.",
-//     name: "Tyler McGinnis",
-//     avatarURL: "https://tylermcginnis.com/would-you-rather/tyler.jpg",
-//     polls: ['5c9qojr2d1738zlx09afby', 'f4xzgapq7mu783k9t02ghx', 'nnvkjqoevs8t02lzcc0ky', '4pt0px8l0l9g6y69ylivti', 'fap8sdxppna8oabnxljzcv', 'leqp4lzfox7cqvsgdj0e7', '26p5pskqi88i58qmza2gid', 'xi3ca2jcfvpa0i3t4m7ag'],
-//   }
-// }
+import gageAvatar from "../images/gage.jpg";
 
 let users = {
   sarahedo: {
-    id: 'sarahedo',
-    name: 'Sarah Edo',
+    id: 'gage',
+    name: 'gage',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionOne',
       "am8ehyc8byjqgar0jgpub9": 'optionTwo',
       "loxhs1bqm25b708cmbf3g": 'optionTwo'
     },
-    questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
+    questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9'],
+    avatarURL: gageAvatar,
+
   },
   tylermcginnis: {
-    id: 'tylermcginnis',
-    name: 'Tyler McGinnis',
+    id: 'mariah',
+    name: 'mariah',
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
     },
     questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
+    avatarURL: "https://cdn3.iconfinder.com/data/icons/avatars-9/145/Avatar_Cat-512.png",
+
   },
   johndoe: {
-    id: 'johndoe',
-    name: 'John Doe',
+    id: 'dianne',
+    name: 'dianne',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
       "6ni6ok3ym7mf1p33lnez": 'optionOne'
     },
     questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
+    avatarURL: "https://store.playstation.com/store/api/chihiro/00_09_000/container/US/en/99/UP2538-CUSA05620_00-AV00000000000074//image?_version=00_09_000&platform=chihiro&w=720&h=720&bg_color=000000&opacity=100",
+
   }
 }
 
-
-let polls2 = {
-  "8xf0y6ziyjabvozdd253nd": {
-    author: "sarah_edo",
-    id: "8xf0y6ziyjabvozdd253nd",
-    text: "Poll #1",
-    timestamp: 1518122597860,
-  },
-  "5c9qojr2d1738zlx09afby": {
-    author: "tylermcginnis",
-    id: "5c9qojr2d1738zlx09afby",
-    text: "Poll #2",
-    timestamp: 1518043995650,
-  }
-}
 
 let polls = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
-    author: 'sarahedo',
+    author: 'mariah',
     timestamp: 1467166872634,
     optionOne: {
-      votes: ['sarahedo'],
-      text: 'have horrible short term memory',
+      votes: [],
+      text: 'Eat sushi?',
     },
     optionTwo: {
       votes: [],
-      text: 'have horrible long term memory'
+      text: 'Eat tacos?'
     }
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: '6ni6ok3ym7mf1p33lnez',
-    author: 'johndoe',
+    author: 'dianne',
     timestamp: 1468479767190,
     optionOne: {
       votes: [],
-      text: 'become a superhero',
+      text: 'Walk down the beach in Maine in the winter.',
     },
     optionTwo: {
       votes: ['johndoe', 'sarahedo'],
-      text: 'become a supervillian'
+      text: 'Eat sixty scoops of ice cream in a warm restaurant.'
     }
   },
   "am8ehyc8byjqgar0jgpub9": {
     id: 'am8ehyc8byjqgar0jgpub9',
-    author: 'sarahedo',
+    author: 'gage',
     timestamp: 1488579767190,
     optionOne: {
       votes: [],
-      text: 'be telekinetic',
+      text: 'Watch a movie.',
     },
     optionTwo: {
       votes: ['sarahedo'],
-      text: 'be telepathic'
+      text: 'Go swimming.'
     }
   },
   "loxhs1bqm25b708cmbf3g": {
     id: 'loxhs1bqm25b708cmbf3g',
-    author: 'tylermcginnis',
+    author: 'mariah',
     timestamp: 1482579767190,
     optionOne: {
       votes: [],
-      text: 'be a front-end developer',
+      text: 'Buy a toy',
     },
     optionTwo: {
       votes: ['sarahedo'],
-      text: 'be a back-end developer'
+      text: 'Buy a car'
     }
   },
   "vthrdm985a262al8qx3do": {
     id: 'vthrdm985a262al8qx3do',
-    author: 'tylermcginnis',
+    author: 'gage',
     timestamp: 1489579767190,
     optionOne: {
-      votes: ['tylermcginnis'],
-      text: 'find $50 yourself',
+      votes: ['gage'],
+      text: 'Ride a train',
     },
     optionTwo: {
-      votes: ['johndoe'],
-      text: 'have your best friend find $500'
+      votes: ['mariah'],
+      text: 'Ride an airplane'
     }
   },
   "xj352vofupe1dqz9emx13r": {
     id: 'xj352vofupe1dqz9emx13r',
-    author: 'johndoe',
+    author: 'gage',
     timestamp: 1493579767190,
     optionOne: {
-      votes: ['johndoe'],
-      text: 'write JavaScript',
+      votes: ['dianne'],
+      text: 'Own a coffee shop',
     },
     optionTwo: {
-      votes: ['tylermcginnis'],
-      text: 'write Swift'
+      votes: ['mariah'],
+      text: 'Own a restaurant'
     }
   },
+
+  "zj352vofupe1dqz9emx13r": {
+    id: 'zj352vofupe1dqz9emx13r',
+    author: 'gage',
+    timestamp: 1493579767191,
+    optionOne: {
+      votes: [],
+      text: 'Buy Lego Millenium Falcon',
+    },
+    optionTwo: {
+      votes: [],
+      text: 'Contribute to your Roth IRA'
+    }
+  },
+
+
+
+
 }
 
 
@@ -164,7 +156,6 @@ function getPolls(){
   // get Polls
   return new Promise((res, rej) => {
     setTimeout(() => res({...polls}), 1000)
-    console.log("Polls: ", polls)
   })
 }
 
