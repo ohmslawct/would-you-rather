@@ -32,8 +32,7 @@ export default function polls (state = {}, action) {
           }
       }
 
-
-
+    
 
 
 // state[action.pid][action.voteFor].votes.concat("Hi")

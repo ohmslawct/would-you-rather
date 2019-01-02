@@ -24,11 +24,12 @@ if(this.props.authedUser === ""){
 return (
 
     <div>
+
     <h1>
     <button name="all" onClick={ this.handleClick }>All</button>&nbsp;•&nbsp;
     <button name="new" onClick={this.handleClick}> New</button>&nbsp;•&nbsp;
     <button name="answered" onClick={this.handleClick}>Answered</button></h1>
-
+    <h2>Would You Rather</h2>
     <RenderPoll/>
 
     </div>
@@ -39,6 +40,8 @@ return (
 
 
 function mapStateToProps ({authedUser, polls, users, views}) {
+
+
   return {
     authedUser : authedUser,
     polls : Object.keys(polls),

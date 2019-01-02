@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleAddPoll } from '../actions/polls'
+import { trackPoll } from '../actions/users'
 import { withRouter } from 'react-router-dom'
 
 class AddPoll extends Component {
@@ -32,6 +33,19 @@ if (e.target.id==="optionTwo") {
     }))
 }
 
+getName = id => {
+const { data } = this.props;
+
+  let myName = data.filter(d => {
+    if( d.id === id){
+      return d.name
+    }
+  });
+
+  return myName[0].name;
+};
+
+
   handleSubmit = (e) => {
     e.preventDefault()
 
@@ -42,6 +56,10 @@ if (e.target.id==="optionTwo") {
     const { authedUser } = this.props;
 
     dispatch(handleAddPoll(text, id, authedUser ))
+
+    let name=this.getName(authedUser);
+
+    dispatch(trackPoll(authedUser, id, name))
 
     this.setState(() => ({
       text: '',
@@ -105,7 +123,7 @@ if (e.target.id==="optionTwo") {
           <button
             className='btn'
             type='submit'
-            disabled={text === ''}>
+            disabled={ (textOne.length === 0 || textTwo.length === 0) }>
               Submit
           </button>
         </form>
@@ -114,9 +132,24 @@ if (e.target.id==="optionTwo") {
   }
 }
 
-function mapStateToProps({authedUser}) {
+function mapStateToProps({authedUser, users, polls}) {
+
+let data = [];
+
+  Object.keys(users).map(id => {
+    data.push({
+      id: users[id].id,
+      name: users[id].name,
+      avatarURL : users[id].avatarURL,
+      questions : Object.keys(users[id].questions).length,
+      answers: Object.keys(users[id].answers).length
+    })
+  })
+
   return{
-    authedUser : authedUser
+    authedUser : authedUser,
+    polls,
+    data
   }
 }
 

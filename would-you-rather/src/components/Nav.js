@@ -52,7 +52,7 @@ render(){
 
           <br/>
           <span className="currentUser">{currentUser}</span>
-
+  
     </nav>
   )
 }

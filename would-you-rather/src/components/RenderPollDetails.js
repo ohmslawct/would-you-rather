@@ -9,36 +9,70 @@ import { formatDate } from '../utils/api'
 
 class RenderPollDetails extends Component {
 
+
+
 getAvatar = (author) => {
-
   let avatarURL = this.props.users.map( (user) => {
-
-      if(user.id === author){
-        console.log(user.Id);
-        console.log(author);
-        console.log(user.avatarURL)
+      if(user.name === author){
         return user.avatarURL
-      } else return
-    }
-    );
+      }
+    });
 
-//avatarURL = avatarURL[0]
-
-avatarURL = avatarURL.join()
-avatarURL = avatarURL.replace(",","");
-avatarURL = avatarURL.replace(",","");
-avatarURL = avatarURL.replace(",","");
-console.log(avatarURL)
+avatarURL = avatarURL.join("")
 return avatarURL;
+}
 
+getName = id => {
+  const { users } = this.props;
 
+  let name = users.filter(user => {
+    return user.id === id;
+  });
+
+  name = name[0].name;
+  return name;
+};
+
+parseVoters(optionOne, optionTwo) {
+
+  let a = optionOne.map( user => this.getName(user))
+  let b = optionTwo.map( user => this.getName(user))
+  let combined = a.concat(b);
+  combined = combined.join(" ");
+  return combined;
+
+}
+
+roundNumber = num => {
+  console.log(num);
+  if(num >=0){
+      return parseFloat(Math.round(num * 100) / 100).toFixed(0);
   }
+  else return "0";
+
+};
+
+wasSelected = voters => {
+  let changeButtonColor = voters.map(voter => {
+    if (voter === this.props.authedUser) {
+      return "buttonSelected";
+    }
+  });
+
+  return changeButtonColor[changeButtonColor.length - 1];
+};
 
 
 render() {
 
+  if(this.props.authedUser === ""){
+    this.props.history.push("/login");
+  }
+
+
+
     let pollDetailsId =  window.location.pathname;
-        pollDetailsId = pollDetailsId.replace('\/poll\/','');
+        pollDetailsId = pollDetailsId.replace('\/question\/','');
           if (pollDetailsId === null) {
               return <p>This Poll doesn't existd</p>
            }
@@ -63,16 +97,32 @@ render() {
           return(
             <div key={poll.id}>
             <div>
-            Question 1: {poll.optionOne.text}<br/>
+            <span className={this.wasSelected(poll.optionOne.votes)}>
+            Question 1: {poll.optionOne.text}<br/></span>
             Votes: {poll.optionOne.votes.length}<br/>
+            {this.roundNumber(
+              (poll.optionOne.votes.length /
+                (poll.optionOne.votes.length + poll.optionTwo.votes.length)) *
+                100
+            )}%    <br/>
             <br/>
-            Question 2: {poll.optionTwo.text}<br/>
+            <span className={this.wasSelected(poll.optionTwo.votes)}>
+            Question 2: {poll.optionTwo.text}<br/></span>
             Votes: {poll.optionTwo.votes.length}<br/>
+            {this.roundNumber(
+              (poll.optionTwo.votes.length /
+                (poll.optionOne.votes.length + poll.optionTwo.votes.length)) *
+                100
+            )}%    <br/>
             <br/>
             Created:  {formatDate(poll.timestamp)}<br/>
             ID: {poll.id}<br/>
             Author: {poll.author}<br/>
-            <img src={avatarURL} height="50" width="50" alt="avatar"/>
+            <img src={avatarURL} height="50" width="50" alt="avatar"/><br/><br/>
+
+
+
+            Voters:<br/> {this.parseVoters(poll.optionOne.votes, poll.optionTwo.votes)}
             </div>
             </div>
           )

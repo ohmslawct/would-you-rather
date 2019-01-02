@@ -44,7 +44,7 @@ let newUser = {
  [userEmail] : {
     id: uid,
     name: userDisplayName,
-    author: "",
+    author: userDisplayName,
     avatarURL: "https://www.ccms.edu/wp-content/uploads/2018/07/Photo-Not-Available-Image.jpg",
     polls: [],
     answers: [],

@@ -39,6 +39,20 @@ class Poll extends Component {
     return name;
   };
 
+  getAvatar = (author) => {
+    const { users } = this.props;
+    let avatarURL = this.props.users.map( (user) => {
+        if(user.name === author){
+
+          return user.avatarURL
+        }
+      });
+
+  avatarURL = avatarURL.join("")
+  return avatarURL;
+  }
+
+
   roundNumber = num => {
     return parseFloat(Math.round(num * 100) / 100).toFixed(0);
   };
@@ -95,7 +109,8 @@ class Poll extends Component {
               {"%"}
               <div className="author">
                 {" "}
-                {poll.author} <NavLink to={`/poll/${poll.id}`}>details</NavLink>
+                <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>
+                {poll.author} <NavLink to={`/question/${poll.id}`}>details</NavLink>
               </div>
               <br />
             </div>
@@ -105,7 +120,7 @@ class Poll extends Component {
 
       case "all":
         return (
-          <div>
+          <div key={poll.id}>
             <button
               name="optionOne"
               id={poll.id}
@@ -126,8 +141,9 @@ class Poll extends Component {
             {poll.optionTwo.text} <br />
             <div className="author">
               {" "}
-              {poll.author}
-              <NavLink to={`/poll/${poll.id}`}>details</NavLink>{" "}
+            <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>{" "}
+              {poll.author}{" "}
+              <NavLink to={`/question/${poll.id}`}>details</NavLink>{" "}
             </div>
             <br />
           </div>
@@ -161,7 +177,8 @@ class Poll extends Component {
               {poll.optionTwo.text} <br />
               <div className="author">
                 {" "}
-                {poll.author} <NavLink to={`/poll/${poll.id}`}>details</NavLink>
+                <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>{" "}
+          
               </div>
               <br />
             </div>
@@ -193,17 +210,29 @@ class Poll extends Component {
 } // component
 
 function mapStateToProps(
-  { authedUser, users, polls, views },
-  id,
-  pollId,
-  myPoll
-) {
+  { authedUser, users, polls, views },id,pollId, myPoll) {
+
+    let data = [];
+
+    Object.keys(users).map(id => {
+      data.push({
+        id: id,
+        name: users[id].name,
+        avatarURL : users[id].avatarURL,
+        questions : Object.keys(users[id].questions).length,
+        answers: Object.keys(users[id].answers).length
+      })
+    })
+
+
+
   return {
     id: Object.keys(polls),
     polls: Object.values(polls),
     authedUser: authedUser,
     users: Object.values(users),
-    views
+    views,
+    data
   };
 }
 

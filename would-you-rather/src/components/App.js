@@ -82,7 +82,7 @@ return (
             <Route exact path="/leaderboard" component={withRouter(Leaderboard)}/>
             <Route exact path="/profile" component={UserProfile}/>
             <Route exact path="/logout" component={LogoutNow}/>
-            <Route exact path='/poll/:id' component={PollDetails} pollDetail='/poll/:id' />
+            <Route exact path='/question/:id' component={PollDetails} pollDetail='/question/:id' />
             <Route path='/404'  component={My404Component} />
           </div>
     </div>

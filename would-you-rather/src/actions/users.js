@@ -9,12 +9,22 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const CHANGE_VIEW = 'CHANGE_VIEW'
 export const LOG_VOTE = 'LOG_VOTE'
+export const TRACK_POLL = 'TRACK_POLL'
 
 
 export function logVote(authedUser, pollId, name) {
   console.log("Logging Vote from user", authedUser, "name ", name , "for Poll ID", pollId);
   return {
     type: LOG_VOTE,
+    pollId : pollId,
+    authedUser : authedUser,
+    name : name
+  }
+}
+
+export function trackPoll(authedUser, pollId, name) {
+  return {
+    type: TRACK_POLL,
     pollId : pollId,
     authedUser : authedUser,
     name : name

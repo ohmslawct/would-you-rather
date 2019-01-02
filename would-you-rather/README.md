@@ -10,9 +10,7 @@
 "Would You Rather" is a web browser based, React with Redux project where users can view and add polls.    This project is written in the programming language Javascript via the React and Redux frameworks. It was created as a project for Udacity, by Bruce Seymour in 2018. This is a learning project and not meant to be publicly used.   
 
 ##### Loading Instructions
-To load locally, download the repository, install dependencies using *npm install* and launch *yarn start* from your terminal.
-
-* npm is a package manager [Download Node.js](https://node.js)
+To load locally, download the repository, install dependencies using *yarn install* and launch *yarn start* from your terminal.
 
 * Yarn is a package manager built by Facebook [Download Yarn](https://yarnpkg.com/en/docs/install)
 
