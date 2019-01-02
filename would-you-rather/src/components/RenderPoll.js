@@ -39,19 +39,18 @@ class Poll extends Component {
     return name;
   };
 
-  getAvatar = (author) => {
+  getAvatar = author => {
     const { users } = this.props;
-    let avatarURL = this.props.users.map( (user) => {
-        if(user.name === author){
+    let avatarURL = this.props.users.map(user => {
+      if (user.name === author) {
+        return user.avatarURL;
+      } else
+        return "";
+    });
 
-          return user.avatarURL
-        }
-      });
-
-  avatarURL = avatarURL.join("")
-  return avatarURL;
-  }
-
+    avatarURL = avatarURL.join("");
+    return avatarURL;
+  };
 
   roundNumber = num => {
     return parseFloat(Math.round(num * 100) / 100).toFixed(0);
@@ -61,7 +60,7 @@ class Poll extends Component {
     let changeButtonColor = voters.map(voter => {
       if (voter === this.props.authedUser) {
         return "buttonSelected";
-      }
+      } else return "";
     });
 
     return changeButtonColor[changeButtonColor.length - 1];
@@ -109,8 +108,14 @@ class Poll extends Component {
               {"%"}
               <div className="author">
                 {" "}
-                <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>
-                {poll.author} <NavLink to={`/question/${poll.id}`}>details</NavLink>
+                <img
+                  src={this.getAvatar(poll.author)}
+                  height="20"
+                  width="20"
+                  alt="avatar"
+                />
+                {poll.author}{" "}
+                <NavLink to={`/question/${poll.id}`}>details</NavLink>
               </div>
               <br />
             </div>
@@ -141,7 +146,12 @@ class Poll extends Component {
             {poll.optionTwo.text} <br />
             <div className="author">
               {" "}
-            <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>{" "}
+              <img
+                src={this.getAvatar(poll.author)}
+                height="20"
+                width="20"
+                alt="avatar"
+              />{" "}
               {poll.author}{" "}
               <NavLink to={`/question/${poll.id}`}>details</NavLink>{" "}
             </div>
@@ -177,8 +187,12 @@ class Poll extends Component {
               {poll.optionTwo.text} <br />
               <div className="author">
                 {" "}
-                <img src={this.getAvatar(poll.author)} height="20" width="20" alt="avatar"/>{" "}
-          
+                <img
+                  src={this.getAvatar(poll.author)}
+                  height="20"
+                  width="20"
+                  alt="avatar"
+                />{" "}
               </div>
               <br />
             </div>
@@ -210,21 +224,22 @@ class Poll extends Component {
 } // component
 
 function mapStateToProps(
-  { authedUser, users, polls, views },id,pollId, myPoll) {
+  { authedUser, users, polls, views },
+  id,
+  pollId,
+  myPoll
+) {
+  let data = [];
 
-    let data = [];
-
-    Object.keys(users).map(id => {
-      data.push({
-        id: id,
-        name: users[id].name,
-        avatarURL : users[id].avatarURL,
-        questions : Object.keys(users[id].questions).length,
-        answers: Object.keys(users[id].answers).length
-      })
-    })
-
-
+  Object.keys(users).map(id => {
+    data.push({
+      id: id,
+      name: users[id].name,
+      avatarURL: users[id].avatarURL,
+      questions: Object.keys(users[id].questions).length,
+      answers: Object.keys(users[id].answers).length
+    });
+  });
 
   return {
     id: Object.keys(polls),

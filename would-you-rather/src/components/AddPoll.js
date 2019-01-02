@@ -39,7 +39,7 @@ const { data } = this.props;
   let myName = data.filter(d => {
     if( d.id === id){
       return d.name
-    }
+    } else return "";
   });
 
   return myName[0].name;

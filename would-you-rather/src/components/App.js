@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import {userStateChangeMonitor} from '../actions/shared'
-import Dashboard from "./Dashboard"
 import LoadingBar from 'react-redux-loading'
 import AddPoll from "./AddPoll"
 import Nav from "./Nav"
