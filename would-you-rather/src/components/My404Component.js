@@ -8,22 +8,20 @@ class My404Component extends Component {
 
 render() {
 
-  if(this.props.authedUser === ""){
-    this.props.history.push("/");
-  }
 
   return (
       <div>
 
       <div>
       <br/>
+      404 ERROR   <br/>
       PAGE NOT FOUND
       <br/>
       <br/>
       Please <NavLink to='/'>
       Sign Up or Log In</NavLink> to continue.
       </div>
-      
+
       </div>
     )
 

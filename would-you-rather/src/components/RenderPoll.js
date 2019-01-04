@@ -35,7 +35,9 @@ class Poll extends Component {
       return user.id === id;
     });
 
-    name = name[0].name;
+    console.log("### Hey Name", name);
+    name = name[0].name
+        console.log("### Hey Name", name);
     return name;
   };
 
@@ -44,8 +46,7 @@ class Poll extends Component {
     let avatarURL = this.props.users.map(user => {
       if (user.name === author) {
         return user.avatarURL;
-      } else
-        return "";
+      } else return "";
     });
 
     avatarURL = avatarURL.join("");
@@ -108,14 +109,16 @@ class Poll extends Component {
               {"%"}
               <div className="author">
                 {" "}
-                <img
-                  src={this.getAvatar(poll.author)}
-                  height="20"
-                  width="20"
-                  alt="avatar"
-                />
-                {poll.author}{" "}
-                <NavLink to={`/question/${poll.id}`}>details</NavLink>
+                {poll.author}
+                <NavLink to={`/question/${poll.id}`}>
+                  <img
+                    src={this.getAvatar(poll.author)}
+                    height="20"
+                    width="20"
+                    alt="avatar"
+                  />
+                  details
+                </NavLink>
               </div>
               <br />
             </div>
@@ -146,14 +149,16 @@ class Poll extends Component {
             {poll.optionTwo.text} <br />
             <div className="author">
               {" "}
-              <img
-                src={this.getAvatar(poll.author)}
-                height="20"
-                width="20"
-                alt="avatar"
-              />{" "}
               {poll.author}{" "}
-              <NavLink to={`/question/${poll.id}`}>details</NavLink>{" "}
+              <NavLink to={`/question/${poll.id}`}>
+                <img
+                  src={this.getAvatar(poll.author)}
+                  height="20"
+                  width="20"
+                  alt="avatar"
+                />
+                details
+              </NavLink>{" "}
             </div>
             <br />
           </div>
@@ -187,12 +192,15 @@ class Poll extends Component {
               {poll.optionTwo.text} <br />
               <div className="author">
                 {" "}
-                <img
-                  src={this.getAvatar(poll.author)}
-                  height="20"
-                  width="20"
-                  alt="avatar"
-                />{" "}
+                <NavLink to={`/question/${poll.id}`}>
+                  <img
+                    src={this.getAvatar(poll.author)}
+                    height="20"
+                    width="20"
+                    alt="avatar"
+                  />
+                  details
+                </NavLink>
               </div>
               <br />
             </div>

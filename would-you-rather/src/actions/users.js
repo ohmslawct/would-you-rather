@@ -1,8 +1,6 @@
 
 import firebaseApp from "../firebaseApp";
 
-
-
 export const RECEIVE_USERS = 'RECEIVE_USERS'
 export const UPDATE_USER = 'UPDATE_USER'
 export const LOGIN_USER = 'LOGIN_USER'

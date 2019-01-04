@@ -1,6 +1,7 @@
 import '../index.css';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import {userStateChangeMonitor} from '../actions/shared'
@@ -71,8 +72,12 @@ return (
 <Fragment>
   <LoadingBar />
     <Nav />
+    {this.props.loading === true
+      ? null
+      :
         <div className='container'>
           <div className="App">
+          <Switch>
             <Route exact path="/" component={withRouter(ViewPolls)} authenticated={this.props.authenticated}/>
             <Route exact path="/login" component={withRouter(Login)} />
             <Route exact path="/signup" component={withRouter(SignUp)} />
@@ -82,10 +87,12 @@ return (
             <Route exact path="/profile" component={UserProfile}/>
             <Route exact path="/logout" component={LogoutNow}/>
             <Route exact path='/question/:id' component={PollDetails} pollDetail='/question/:id' />
-            <Route path='/404'  component={My404Component} />
+            <Route exact path='*' component={My404Component} />
+          </Switch>
           </div>
-    </div>
+    </div>}
 </Fragment>
+
     );
   }
 }
